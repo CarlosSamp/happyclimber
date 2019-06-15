@@ -63,6 +63,12 @@ public class JournalPosController {
 
     }/**/
 
+    /**
+     *
+     * @param id Möglichkeit Journalposition zu zeigen
+     * @param model spring framework model
+     * @return JournalForm.html anzeigen
+     */
     @GetMapping (value = {"", "/{id}"})
     public String showForm(@PathVariable("id") Optional<Long> id, Model model){
         JournalPosition journalPosition;
@@ -73,8 +79,6 @@ public class JournalPosController {
         model.addAttribute("ascent", Ascent.values());
         model.addAttribute("grade", Grade.values());
         model.addAttribute("route", routeService.getRoute());
-        //System.out.println(Ascent.values()[0].getLabel());
-        //System.out.println(Grade.values()[0].getLabel());
         model.addAttribute("journalPosition", new JournalPosition());
 
         return "journalForm";

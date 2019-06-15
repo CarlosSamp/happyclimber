@@ -28,6 +28,12 @@ public class RouteController {
     @Autowired
     private RouteRepository routeRepository;
 
+    /**
+     *
+     * @param route Route welche hinzugefügt wird
+     * @param model spring framework model
+     * @return routeForm wird aktualisiert
+     */
     @PostMapping("/add")
     public String route(@ModelAttribute Route route, Model model) {
 
@@ -38,6 +44,13 @@ public class RouteController {
         return "redirect:/route";
 
     }/**/
+
+    /**
+     *
+     * @param sector Sektor welch hinzugefügt wird
+     * @param model srpring framework model
+     * @return routeForm wird aktualisiert
+     */
     @PostMapping("/addsector")
     public String sector(@ModelAttribute Sector sector, Model model) {
 
@@ -46,6 +59,12 @@ public class RouteController {
         return "redirect:/route";
 
     }
+
+    /**
+     *
+     * @param model spring framework model
+     * @return routeForm.html wird angezeigt
+     */
     @GetMapping
     public String showForm(Model model){
         model.addAttribute("sectora", new Sector());
