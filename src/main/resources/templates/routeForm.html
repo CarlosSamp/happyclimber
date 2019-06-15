@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<!--
+<html xmlns:th="http://www.thymeleaf.org">-->
+<head>
+    <meta charset="UTF-8">
+    <title>Neue Route</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+</head>
+<body>
+<p th:if="${log == null}">This Page is Secret</p>
+<div th:if="${log}" class="container">
+    <nav class="navbar navbar-expand-sm bg-light">
+    <ul class="navbar-nav">
+        <li class="nav-item"><a class="nav-link" href="http://localhost:8080/main">Startseite</a></li>
+        <li class="nav-item"><a class="nav-link" href="http://localhost:8080/journal">Journaleintrag</a></li>
+
+
+
+    <li class="nav-item"><form th:if="${log}" name="logout" th:action="@{/main/logout}" method="post" th:object="${climber}">
+        <input type="submit" value="logout"/>
+
+    </form></li>
+    </ul>
+    </nav>
+    <hr>
+
+<h1>Hier können Sie eine neue Route eintragen</h1>
+    <form method="post" th:action="@{/route/add}" th:object="${route}">
+<p>Name der Route: <input type="text" th:field="*{name}" /></p>
+<p>Schwierigkeit:
+    <select name="grade" th:field="*{grade}" >
+        <option  th:each="g : ${grade}" th:value="${g}" th:text="${g.label}"></option>
+    </select></p>
+        <p> Sektor:
+            <select name="sector" th:field="*{sector.id}" >
+                <option th:each="s : ${sector}" th:value="${s.id}" th:text="${s.name}">
+                </option>
+            </select></p>
+
+
+    <p><input type="submit" value="Senden" /> <input type="reset" value="Reset" /></p>
+        </form>
+
+
+<fieldset>
+    <form method="post" th:action="@{/route/addsector}" th:object="${sectora}">
+        <h3>Neue Sektor</h3>
+        <p>Falls der Sektor noch nicht auf der Liste ist, können Sie hier ein neues hinzufügen</p>
+        <p>Land: <input type="text" th:field="*{country}" /></p>
+        <p>Ort: <input type="text" th:field="*{place}" /></p>
+        <p>Sektorname: <input type="text" th:field="*{name}" /></p>
+
+        <p><input type="submit" value="Senden" /> <input type="reset" value="Reset" /></p>
+    </form>
+</fieldset>
+    <hr>
+    <div class="row">
+        <div class="col-sm">
+            <figure>
+                <figcaption>Topo Beispiel:  Schweiz, Interlaken, Sektor Lehn</figcaption>
+                <img class="img-responsive" src=".../static/images/TopoLehn.png" th:src="@{images/TopoLehn.png}">
+
+            </figure>
+        </div>
+        <div class="col-sm">
+            <figure>
+                <figcaption>Schwierigkeitstabelle: In Europa wird hauptsächlich die franzözische Bewertung verwendet</figcaption>
+                <img class="img-responsive" src=".../static/images/grade.jpg" th:src="@{images/grade.jpg}">
+
+            </figure>
+        </div>
+    </div>
+
+</div>
+</body>
+</html>

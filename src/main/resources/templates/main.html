@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <title>Main</title>
+</head>
+<body>
+<div class="container">
+    <nav class="navbar navbar-expand-sm bg-light">
+<ul class="navbar-nav">
+    <li class="nav-item"><a class="nav-link" th:if="${log == null}" href="http://localhost:8080/climber">Registrieren</a></li>
+    <li class="nav-item"><a class="nav-link" th:if="${log}" href="http://localhost:8080/journal">Journaleintrag</a></li>
+
+    <li class="nav-item"><form class="nav-link" th:if="${log}"  name="logout" th:action="@{/main/logout}" method="post" th:object="${climber}">
+        <input type="submit" value="logout"/>
+
+    </form></li>
+</ul>
+
+    </nav>
+<!--
+
+    <p th:text="${log.username}">
+-->
+    <hr>
+
+<div th:if="${log}">
+    <h3>Hallo <span th:text="${log.firstname}"></span></h3>
+    <p >Total geklettert: <span th:text="${countbyclimberid}"></span></p>
+    <p >Anzahl OnSight: <span th:text="${countonsight}"></span></p>
+    <p >Anzahl Redpoint: <span th:text="${countredpoint}"></span></p>
+<h4> Das hast du bis heute alles geklettert:</h4>
+
+    <table class="table table-bordered">
+        <thead>
+        <tr >
+
+            <th>Datum</th>
+            <th>Route</th>
+            <th>Schwierigkeit</th>
+            <th>Begehungsstil</th>
+            <th>Sector</th>
+            <th>Land</th>
+            <th>Löschen</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:if="${j.climber.id} == ${log.id}" th:each="j : ${journalstats}" >
+
+            <td type="date" data-date="" data-date-format="DD MMMM YYYY" th:text="${#dates.format(j.date, 'dd-MM-yyy')}"></td>
+            <td th:text="${j.route.name}"></td>
+            <td th:text="${j.route.grade.label}"></td>
+            <td th:text="${j.ascent.label}"></td>
+            <td th:text="${j.route.sector.name}"></td>
+            <td th:text="${j.route.sector.country}"></td>
+            <td><a th:href="@{'/main/delete?id='+${j.id}}"><i class="material-icons">delete</i></a></td>
+        </tr>
+
+        </tbody>
+    </table>
+</div>
+
+<!--<a th:if="${todos}" href="#" th:href="@{/logout}">Log Out</a>-->
+<fieldset>
+    <form th:if="${log == null}"  method="post" th:action="@{/main}" th:object="${climber}" >
+        <h1>Happy Climber</h1>
+        <h1>Willkomen zur deiner persönliche Climbingjournal!</h1>
+        <hr>
+        <h1>Login</h1>
+        <p>Username: <input type="text" th:field="*{username}"  id="namenlabel" /></p>
+
+        <label for="passwortlabel">Passwort: <input type="password" name="passwort" id="passwortlabel" th:field="*{password}" /></label>
+
+        <br />
+       <input name="submit" type="submit" value="Login" />
+
+    </form>
+
+</fieldset>
+</div>
+</body>
+</html>

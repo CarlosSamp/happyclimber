@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <title>Routeneintrag</title>
+</head>
+<body>
+<p th:if="${log == null}">This Page is Secret</p>
+<div class="container">
+    <nav class="navbar navbar-expand-sm bg-light">
+    <ul class="navbar-nav">
+        <li class="nav-item"><a class="nav-link" href="http://localhost:8080/main">Startseite</a></li>
+
+        <li><form class="nav-link" name="logout" th:action="@{/main/logout}" method="post" th:object="${climber}">
+            <input type="submit" value="logout"/>
+
+        </form></li>
+    </ul>
+    </nav>
+
+
+<hr>
+    <div class="col" th:if="${log != null}">
+<form method="post" th:action="@{/journal/add}" th:object="${journalPosition}">
+    <!-- Die Ids werden benötigt damit geändert werden kann (bei nur insert ist es nicht relevant)-->
+    <input type="hidden" th:field="*{id}" />
+    <h2>Was hast du geklettert?</h2>
+    <fieldset>
+
+    <!-- für das binden der Felder wird als Referenzzeichen * verwendet
+        d.h. das Objekt Person hat ein Attribut name -->
+        <p>Datum: <input type="date" th:field="*{date}" /></p>
+        <p>Begehungsstil:
+            <select name="ascent" th:field="*{ascent}">
+                <option th:each="ascente : ${ascent}" th:value="${ascente}" th:text="${ascente.label}"></option>
+            </select></p>
+        <p> Route:
+        <select name="grade" th:field="*{route.id}" >
+            <option th:each="r : ${route}" th:value="${r.id}" th:text="${r.name}">
+            </option>
+        </select></p>
+    </fieldset>
+
+
+    <p><input type="submit" value="Senden" /> <input type="reset" value="Reset" /></p>
+
+
+
+</form>
+        <hr>
+<p>Falls die Route nicht vorhanden ist, kann eine neue eingefügt werden</p>
+<form action="http://localhost:8080/route">
+    <p><input type="submit" value="Neue Route" /> </p></form>
+
+<p th:if="${log == null}">Du musst eingeloggt sein.</p>
+        <hr>
+    </div>
+        <div class="col">
+    <h2>Begehungsstile Erklärung</h2>
+    <h3>Freesolo</h3>
+
+            <p>Klettern für Todesmutige. Diese Freaks verzichten zur Begehung einer Kletterroute auch in luftiger Höhe auf jegliche Sicherung wie z.B. Seil & Haken.</p>
+
+    <h3>Onsight</h3>
+            <p>Eine auf Anhieb sturzfrei begangene Route. Der Kletterer darf die Route ausschliesslich aus Bodenhöhe begutachten. Jegliche Informationen über die Route oder das Beobachten anderer Kletterer in der Route sind nicht erlaubt.</p>
+
+        <h3>Flash</h3>
+            <p>Auf Anhieb sturzfrei begangene Route. Die Kletterroute darf im Gegensatz zur Onsightbegehung vorher durch Abseilen oder Beobachten anderer eingesehen werden.</p>
+
+            <h3>Rotpunkt</h3>
+            <p>Sturzfreie Begehung einer Route nach mehreren Versuchen. Alle Zwischensicherungen müssen dabei selbst angebracht werden.</p>
+
+                <h3>Pinkpoint</h3>
+            <p>Sturzfreie Begehung einer Kletterroute mit bereits vorhandenen Zwischensicherungen.</p>
+            <h3>Toprope</h3>
+            <p>Dabei verläuft das Seil bereits durch den Umlenkhaken. Somit ist der Kletterer stets von oben gesichert. Geeignet für Anfänger und Kletterer mit Sturzangst.</p>
+
+    </div>
+    </div>
+</body>
+</html>

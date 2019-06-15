@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <meta charset="UTF-8">
+    <title> Register</title>
+</head>
+<body>
+<div class="container">
+    <nav class="navbar navbar-expand-sm bg-light">
+    <ul class="navbar-nav">
+        <li class="nav-item"><a class="nav-link" href="http://localhost:8080/main">Startseite</a></li>
+
+
+    </ul>
+
+    </nav>
+<h1>Registrier dich!</h1>
+<form method="post" th:action="@{/climber/add}" th:object="${climber}">
+    <!-- Die Ids werden benötigt damit geändert werden kann (bei nur insert ist es nicht relevant) -->
+    <input type="hidden" th:field="*{id}" />
+
+
+    <fieldset>
+
+        <!-- für das binden der Felder wird als Referenzzeichen * verwendet
+             d.h. das Objekt Person hat ein Attribut name -->
+        <p>Username: <input type="text" th:field="*{username}" /></p>
+         <p>Vorname: <input type="text" th:field="*{firstname}" /></p>
+         <p>Nachname: <input type="text" th:field="*{name}" /></p>
+        <p>Geburtstag: <input type="date" th:field="*{birthday}" /></p>
+        <p>Nationalität: <input type="text" th:field="*{nation}" /></p>
+        <p>Wohnort: <input type="text" th:field="*{living}" /></p>
+        <p>Passwort: <input type="password" th:field="*{password}" /></p>
+        <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
+     </fieldset>
+
+ </form>
+
+
+</div>
+ </body>
+ </html>
